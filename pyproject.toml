@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "magnet-sim"
+version = "0.1.0"
+description = "A Python package for simulating magnetically coupled RL circuits with PID control"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Magnet Simulation Team", email = "contact@magnet-sim.org"}
+]
+keywords = ["physics", "simulation", "circuits", "magnetic", "pid", "control"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.20.0",
+    "pandas>=1.3.0",
+    "scipy>=1.7.0",
+    "matplotlib>=3.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy",
+]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-autodoc-typehints",
+]
+
+[project.scripts]
+magnet-sim = "magnet_sim.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/your-username/magnet-sim"
+Documentation = "https://magnet-sim.readthedocs.io/"
+Repository = "https://github.com/your-username/magnet-sim.git"
+"Bug Tracker" = "https://github.com/your-username/magnet-sim/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["magnet_sim*"]
+
+[tool.setuptools.package-data]
+magnet_sim = ["data/*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]

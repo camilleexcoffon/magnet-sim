@@ -1,0 +1,10 @@
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+recursive-include magnet_sim *.py
+recursive-include examples *.py *.csv *.md
+recursive-include tests *.py
+recursive-include docs *.md
+global-exclude __pycache__
+global-exclude *.py[co]

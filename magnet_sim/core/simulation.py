@@ -99,6 +99,7 @@ def simulate_magnetically_coupled_rl(
                 setpoint_func=target_funcs[i],
                 output_limits=output_limits,
                 name=f"PID{i+1}",
+                t_start= t_span[0],
             )
             pid_controllers.append(pid)
     
@@ -150,6 +151,7 @@ def simulate_magnetically_coupled_rl(
                 setpoint_func=target_funcs[i],
                 output_limits=(-100, 100000),
                 name=f"PID{i+1}",
+                t_start=t_span[0],
             )
             pid_controllers_reset.append(pid)
 

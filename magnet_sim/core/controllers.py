@@ -44,6 +44,7 @@ class PIDController:
         fixed_setpoint: Optional[float] = None,
         output_limits: Optional[Tuple[float, float]] = None,
         name: Optional[str] = None,
+        t_start= None,
     ):
         """
         Initialize PID controller.
@@ -66,13 +67,15 @@ class PIDController:
         self.fixed_setpoint = fixed_setpoint
         self.output_limits = output_limits
         self.name = name if name else "PID"
+        self.t_start = t_start
 
         # Initialize error terms
         self.prev_error = 0.0
         self.integral = 0.0
-        self.prev_time = 0.0
+        self.prev_time = t_start
         self.first_call = True
         self.prev_Ki = 0.0
+
 
     def get_setpoint(self, t: float) -> float:
         """
@@ -113,7 +116,7 @@ class PIDController:
         
         if self.first_call:
             dt = 0.001
-            self.first_call = False
+            
         else:
             dt = current_time - self.prev_time
             dt = max(dt, 0.001)
@@ -135,9 +138,13 @@ class PIDController:
         integral_term = self.Ki * self.integral
         
         # Derivative term
-        derivative = (error - self.prev_error) / dt if dt > 0 else 0
-        derivative_term = self.Kd * derivative
-
+        
+        if self.first_call : 
+            derivative_term = 0
+            self.first_call = False
+        else : 
+            derivative = (error - self.prev_error) / dt if dt > 0 else 0
+            derivative_term = self.Kd * derivative
         # Calculate output
         output = proportional + integral_term + derivative_term
 
